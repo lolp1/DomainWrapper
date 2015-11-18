@@ -9,22 +9,17 @@ namespace DomainWrapper
     /// </summary>
     public class PathedDomainHost : CriticalFinalizerObject, IDisposable
     {
-        public enum ClickToMove
-        {
-            Push = 0x1C,
-            X = 0x84,
-            Y = X + 0X4,
-            Z = +0X8,
-            Guid = 0x20,
-            Distance = 0xc
-        }
-
         #region Fields, Private Properties
         private readonly string _dllPath;
         private AppDomain _hostDomain;
         #endregion
 
-        #region Constructors, Destructors
+        #region Constructors, Destructors        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PathedDomainHost"/> class.
+        /// </summary>
+        /// <param name="name">The name of the application to be hosted.</param>
+        /// <param name="path">The path of the application being posted.</param>
         public PathedDomainHost(string name, string path)
         {
             var setupInfo = new AppDomainSetup
@@ -37,6 +32,9 @@ namespace DomainWrapper
             _hostDomain = AppDomain.CreateDomain(name, AppDomain.CurrentDomain.Evidence, setupInfo);
         }
 
+        /// <summary>
+        /// Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.
+        /// </summary>
         ~PathedDomainHost()
         {
             Dispose(false);
@@ -49,17 +47,20 @@ namespace DomainWrapper
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        #endregion
-
+        #endregion        
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (_hostDomain != null)
-            {
-                AppDomain.Unload(_hostDomain);
-                _hostDomain = null;
-            }
+            if (_hostDomain == null) return;
+            AppDomain.Unload(_hostDomain);
+            _hostDomain = null;
         }
-
+        /// <summary>
+        /// Executes this instance.
+        /// </summary>
         public void Execute()
         {
             _hostDomain.ExecuteAssembly(_dllPath);
