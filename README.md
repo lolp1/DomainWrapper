@@ -6,3 +6,6 @@
 LoadDomainHostSettings(string loadDirectory, string applicationName)
 HostDomain()
 ```
+
+## Credits
+*miceiken/Scorpiona deserve all credits for the base domain classes.
