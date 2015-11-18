@@ -1,0 +1,1 @@
+You need the nuget package UnmanagedExports.1.2.7(or higher) installed to make this work.
