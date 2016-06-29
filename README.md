@@ -1,10 +1,10 @@
 # DomainWrapper
 ### DomainWrapper is set of classes to provide an easy way to handle the injection of .net code into a process.
 
-* See these methods and properties contained inside PatchedDomainLoader.cs to see how to use it.
+* Simply inject the dll and call the export below with the path being replaced with the applications path you want to host.
+* Example: LoadDomainHostSettings(C:\Users\Name\Desktop\Test\TestApp.exe)
 ```csharp
-LoadDomainHostSettings(string loadDirectory, string applicationName)
-HostDomain()
+LoadDomainHostSettings(string applicationPath)
 ```
 
 ## Credits
